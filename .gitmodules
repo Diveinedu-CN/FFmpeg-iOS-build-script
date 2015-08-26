@@ -1,0 +1,3 @@
+[submodule "x264"]
+	path = x264
+	url = https://github.com/Diveinedu-CN/x264-for-iOS.git

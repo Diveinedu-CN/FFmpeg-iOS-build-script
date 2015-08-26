@@ -9,16 +9,27 @@ SCRATCH="scratch"
 THIN=`pwd`/"thin"
 
 # absolute path to x264 library
-#X264=`pwd`/fat-x264
+X264=`pwd`/x264/x264-iOS
 
 #FDK_AAC=`pwd`/fdk-aac/fdk-aac-ios
 
 CONFIGURE_FLAGS="--enable-cross-compile --disable-debug --disable-programs \
-                 --disable-doc --enable-pic"
+                 --disable-doc --enable-pic --enable-nonfree"
+
+if [ -d "$PWD/x264" ]
+then
+	pushd x264
+	echo "building x264 library for iOS..."
+	./build-x264.sh
+	popd
+else
+	echo "x264 submodule doesn't exist..."
+	exit 1
+fi
 
 if [ "$X264" ]
 then
-	CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-gpl --enable-libx264"
+	CONFIGURE_FLAGS="$CONFIGURE_FLAGS  --enable-libx264 --enable-gpl"
 fi
 
 if [ "$FDK_AAC" ]
@@ -27,9 +38,9 @@ then
 fi
 
 # avresample
-#CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-avresample"
+CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-avresample"
 
-ARCHS="arm64 armv7 x86_64 i386"
+ARCHS="armv7 armv7s arm64 x86_64 i386"
 
 COMPILE="y"
 LIPO="y"
