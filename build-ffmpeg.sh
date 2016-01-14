@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # directories
-SOURCE="ffmpeg-2.7.2"
+SOURCE="ffmpeg-2.8.4"
 FAT="FFmpeg-iOS"
 
 SCRATCH="scratch"
@@ -14,7 +14,7 @@ X264=`pwd`/x264/x264-iOS
 #FDK_AAC=`pwd`/fdk-aac/fdk-aac-ios
 
 CONFIGURE_FLAGS="--enable-cross-compile --disable-debug --disable-programs \
-                 --disable-doc --enable-pic --enable-nonfree"
+                 --disable-doc --enable-pic --enable-nonfree  --enable-gpl --enable-version3"
 
 if [ -d "$PWD/x264" ]
 then
@@ -129,6 +129,7 @@ then
 			LDFLAGS="$LDFLAGS -L$FDK_AAC/lib"
 		fi
 
+		CFLAGS="$CFLAGS -fembed-bitcode"
 		TMPDIR=${TMPDIR/%\/} $CWD/$SOURCE/configure \
 		    --target-os=darwin \
 		    --arch=$ARCH \
