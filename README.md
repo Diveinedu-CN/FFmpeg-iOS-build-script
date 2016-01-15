@@ -6,8 +6,8 @@ This is a shell script to build FFmpeg libraries for iOS apps.
 
 Tested with:
 
-* FFmpeg 2.7.2
-* Xcode 6.4
+* FFmpeg 2.8.4
+* Xcode 7.2
 
 ## Requirements
 
@@ -15,6 +15,8 @@ Tested with:
 * yasm 1.2.0
 
 ## Usage
+* Preparation:
+        git submodule update
 
 * To build everything:
 
@@ -34,7 +36,7 @@ Tested with:
 
 ## Download
 
-You can download a binary for FFmpeg 2.7.2 release at https://downloads.sourceforge.net/project/ffmpeg-ios/ffmpeg-ios-master.tar.bz2
+You can download a binary for FFmpeg 2.8.4 release at http://www.ffmpeg.org/releases/ffmpeg-2.8.4.tar.bz2
 
 ## External libraries
 
