@@ -1,5 +1,8 @@
 #!/bin/sh
 
+
+git submodule foreach git pull origin master
+
 # directories
 SOURCE="ffmpeg-2.8.4"
 FAT="FFmpeg-iOS"
@@ -7,6 +10,7 @@ FAT="FFmpeg-iOS"
 SCRATCH="scratch"
 # must be an absolute path
 THIN=`pwd`/"thin"
+
 
 USE_LIBRTMP="n"
 
