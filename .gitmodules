@@ -1,3 +1,6 @@
 [submodule "x264"]
 	path = x264
 	url = https://github.com/Diveinedu-CN/x264-for-iOS.git
+[submodule "librtmp-for-iOS"]
+	path = librtmp-for-iOS
+	url = https://github.com/Diveinedu-CN/librtmp-for-iOS.git

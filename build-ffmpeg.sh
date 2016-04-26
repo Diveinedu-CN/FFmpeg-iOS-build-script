@@ -8,6 +8,11 @@ SCRATCH="scratch"
 # must be an absolute path
 THIN=`pwd`/"thin"
 
+USE_LIBRTMP="n"
+
+OPENSSL="$PWD/OpenSSL-for-iPhone"
+LIBRTMP="$PWD/librtmp-for-iOS"
+
 # absolute path to x264 library
 X264=`pwd`/x264/x264-iOS
 
@@ -16,10 +21,27 @@ X264=`pwd`/x264/x264-iOS
 CONFIGURE_FLAGS="--enable-cross-compile --disable-debug --disable-programs \
                  --disable-doc --enable-pic --enable-nonfree  --enable-gpl --enable-version3"
 
+if [ $USE_LIBRTMP = "y" ] && [ -d $LIBRTMP ]; then
+	pushd librtmp-for-iOS
+	echo "building libRTMP-iOS library for iOS..."
+	git submodule init
+	git submodule update
+	./build-librtmp.sh
+	popd
+fi
+
+
+if [ $USE_LIBRTMP = "YES" ] && [ -d $LIBRTMP ]; then
+	CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-librtmp  --enable-openssl"
+	export PKG_CONFIG_PATH="$LIBRTMP/lib/pkgconfig"
+fi
+
 if [ -d "$PWD/x264" ]
 then
 	pushd x264
 	echo "building x264 library for iOS..."
+	git submodule init
+	git submodule update
 	./build-x264.sh
 	popd
 else
@@ -118,6 +140,10 @@ then
 		CC="xcrun -sdk $XCRUN_SDK clang"
 		CXXFLAGS="$CFLAGS"
 		LDFLAGS="$CFLAGS"
+		if [ $USE_LIBRTMP = "y" ] && [ -d $LIBRTMP ]; then
+			CFLAGS="$CFLAGS -I$OPENSSL/include"
+			LDFLAGS="$LDFLAGS -L$OPENSSL/lib"
+		fi
 		if [ "$X264" ]
 		then
 			CFLAGS="$CFLAGS -I$X264/include"
